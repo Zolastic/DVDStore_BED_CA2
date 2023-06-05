@@ -1,0 +1,114 @@
+<!-- Name: Ho Nhat Tien
+Class: DIT/FT/1B/1B04
+Admission Number: P2205894 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD: Search Result</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="scripts/config.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            const url = `${backend_url}/films` + window.location.search;
+
+            
+            console.log("window.location.search: ", window.location.search);
+
+            $("#adminAccess").click(function() {
+                console.log("clicked");
+                const tmpToken = localStorage.getItem("token");
+
+                $.ajax({
+                    headers: { "authorization": "Bearer " + tmpToken },
+                    url:  `${backend_url}/verify`,
+                    type: "GET",
+                    success: function(data, textStatus, xhr) {
+                        window.location.assign("adminAccess.html");
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        if (xhr.status === 401) {
+                            window.location.assign("loginPage.html");
+                        } else if (xhr.status === 403) {
+                            $("#adminAccessError").html(`<section class="addFeedback">
+                <section class="errorColour"></section>
+                <section>
+                    <p class="backgroundMessage">Uh-oh! <i class="bi bi-emoji-frown-fill"></i></p>
+                    <p>You are not an admin</p>
+                </section>
+            </section>`);
+                        }
+                    }
+                })
+            });
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    if (data != null) {
+                        let divOutput = "";
+                        for (let i = 0; i < data.length; i++) {
+                            divOutput += `<div class="card searchReasultCard" style="margin-top: 2rem;">
+                    <div class="card-body">
+                        <p class="card-text">${data[i].title}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        ${data[i].description}
+                    </div>
+                    <div class="card-footer text-muted">
+                        <a href="viewFilm.html?film_id=${data[i].film_id}" class="btn btn-danger" class="View">View</a>
+
+                    </div>
+                </div>`
+                        }
+                        $("#dvdResults").html(divOutput);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Error in Operatoin")
+                    alert("Error")
+                    alert(JSON.stringify(xhr));
+                    alert(textStatus);
+                    alert(JSON.stringify(xhr));
+                }
+            });
+
+        });
+    </script>
+
+</head>
+
+<body class="body">
+
+    <header>
+        <div class="navigation">
+            <a class="active" href="homepage.html">Homepage</a>
+            <a id="adminAccess">Admin Access</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="heading d-flex justify-content-center align-items-center">
+            <h1>Search Results</h1>
+        </section>
+        <section id="dvdResults" class="searchResultsArea d-flex flex-column justify-content-center align-items-center">
+
+        </section>
+    </main>
+</body>
+
+</html>

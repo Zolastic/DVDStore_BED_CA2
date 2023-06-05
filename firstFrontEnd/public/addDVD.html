@@ -1,0 +1,309 @@
+<!-- Name: Ho Nhat Tien
+Class: DIT/FT/1B/1B04
+Admission Number: P2205894 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD: add DVD</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="scripts/config.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const tmpToken = localStorage.getItem("token");
+
+            $.ajax({
+                headers: { "authorization": "Bearer " + tmpToken },
+                url: `${backend_url}/verify`,
+                type: "GET",
+                success: function (data, textStatus, xhr) {
+                    return
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    window.location.assign("loginPage.html");
+                }
+            });
+
+            $.ajax({
+                url:  `${backend_url}/language`,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    console.log("data language: ", data);
+                    let output = "";
+                    for (let i = 0; i < data.length; i++) {
+                        output += `<option value="${data[i].language_id}">${data[i].name}</option>`
+                    }
+
+                    $("#language_id").html(output);
+                    $("#original_language_id").html(`<option value=""></option>` + output);
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("error");
+                    console.log(JSON.stringify(xhr));
+                },
+            });
+
+            $.ajax({
+                url:  `${backend_url}/category`,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    console.log("data language: ", data);
+                    let output = "";
+                    for (let i = 0; i < data.length; i++) {
+                        output += `<option value="${data[i].category_id}">${data[i].name}</option>`
+                    }
+
+                    $("#category_id").html(output);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("error");
+                    console.log(JSON.stringify(xhr));
+                },
+            });
+
+
+            $("#addDVDButton").click(function () {
+                const title = $("#title").val();
+                const description = $("#description").val();
+                const release_year = $("#release_year").val();
+                const language_id = $("#language_id").val();
+                const original_language_id = $("#original_language_id").val();
+                const rental_duration = $("#rental_duration").val();
+                const rental_rate = $("#rental_rate").val();
+                const length = $("#length").val();
+                const replacement_cost = $("#replacement_cost").val();
+                const rating = $("#rating").val();
+                const special_features = $("#special_features").val();
+                const category_id = $("#category_id").val();
+                const actors = $("#actors").val();
+                let image = $("#image");
+
+                console.log("image: ", image);
+
+                // let form = document.getElementById('addDVDForm');
+
+                // let image2 = image.substring(image.lastIndexOf("\\") + 1);
+                // image = "images\\" + image2
+
+                var form = new FormData();
+                form.append("title", title);
+
+                if (image[0].files.length > 0) {
+                    form.append("image", image[0].files[0], image.val());
+                }
+                form.append("description", description);
+                form.append("release_year", release_year);
+                form.append("language_id", language_id);
+                form.append("original_language_id", original_language_id);
+                form.append("rental_duration", rental_duration);
+                form.append("rental_rate", rental_rate);
+                form.append("length", length);
+                form.append("replacement_cost", replacement_cost);
+                form.append("rating", rating);
+                form.append("category_id", category_id);
+                form.append("actors", actors);
+
+
+                // const dataObj = {
+                //     title: title,
+                //     description: description,
+                //     release_year: release_year,
+                //     language_id: language_id,
+                //     original_language_id: original_language_id,
+                //     rental_duration: rental_duration,
+                //     rental_rate: rental_rate,
+                //     length: length,
+                //     replacement_cost: replacement_cost,
+                //     rating: rating,
+                //     special_features: special_features,
+                //     category_id: category_id,
+                //     actors: actors,
+                //     image: image,
+                // }
+
+                // const data = JSON.stringify(dataObj);
+
+                // console.log("data: ", data);
+
+                $.ajax({
+                    headers: { "authorization": "Bearer " + tmpToken },
+                    url:  `${backend_url}/film`,
+                    type: "POST",
+                    mimeType: "multipart/form-data",
+                    processData: false,
+                    contentType: false,
+                    data: form,
+                    // contentType: "application/json;charset=utf-8",
+                    // dataType: "json",
+                    success: function (data, textStatus, xhr) {
+
+                        console.log("data: ", data);
+
+                        let output = "";
+                        if (data != null) {
+
+                            data = JSON.parse(data);
+
+                            output = `<section class="addFeedback mt-1">
+                <section class="successColour"></section>
+                <section>
+                    <p class="backgroundMessage">Yay! <i class="bi bi-emoji-laughing-fill"></i></p>
+                    <p>${title} has been added</p>
+                    <p class="actorID">film ID: ${data.result}</p>
+                </section>
+            </section>`;
+                        } else {
+                            output = `<section class="addFeedback mt-1">
+                <section class="errorColour"></section>
+                <section>
+                    <p class="backgroundMessage">Uh-oh! <i class="bi bi-emoji-frown-fill"></i></p>
+                    <p>Failed to add ${title}</p>
+                </section>
+            </section>`;
+                        }
+
+                        $("#addDVDFeedback").html(output);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        if (xhr.status === 400) {
+                            output = `<section class="addFeedback mt-1">
+                <section class="errorColour"></section>
+                <section>
+                    <p class="backgroundMessage">Uh-oh! <i class="bi bi-emoji-frown-fill"></i></p>
+                    <p>Missing Data</p>
+                </section>
+            </section>`;
+                        } else {
+                            output = `<section class="addFeedback mt-1">
+                <section class="errorColour"></section>
+                <section>
+                    <p class="backgroundMessage">Uh-oh! <i class="bi bi-emoji-frown-fill"></i></p>
+                    <p>Failed to add ${title}</p>
+                </section>
+            </section>`
+                        }
+
+                        $("#addDVDFeedback").html(output);
+                    }
+                })
+
+
+
+            })
+
+            $("#signOut").click(function() {
+                localStorage.removeItem('token');
+                window.location.assign("homepage.html");
+            })
+
+
+        })
+    </script>
+
+    <script>
+        function onFileChange() {
+            let imageName = document.getElementById("imageName");
+            let inputImage = document.querySelector("input[type=file]").files[0];
+            imageName.innerText = inputImage.name;
+        }
+    </script>
+
+
+</head>
+
+<body class="body">
+    <header>
+        <div class="navigation">
+            <a href="homepage.html">Homepage</a>
+            <a href="adminAccess.html">Admin Access</a>
+            <a href="addActor.html">Add Actor</a>
+            <a href="addCustomer.html">Add Customer</a>
+            <a class="active" href="addDVD.html">Add DVD</a>
+        </div>
+    </header>
+
+
+    <main class="d-flex flex-column justify-content-center align-items-center">
+        <section class="selectImage col-6 mt-3">
+            <label for="image">
+                Select Image <br />
+                <i class="bi bi-camera-fill"></i>
+                <input id="image" type="file" onchange="onFileChange()" />
+                <br />
+                <span id="imageName"></span>
+            </label>
+        </section>
+        <form class="d-flex flex-row justify-content-center align-items-center col-6" id="addDVDForm">
+            <section class="col-6">
+                <section action="">
+                    <input type="text" id="title" placeholder="title" />
+                    <input type="text" id="description" placeholder="description" />
+                    <input type="text" id="release_year" placeholder="release_year" />
+                    <label for="language_id" class="mt-3">Language</label>
+                    <select id="language_id"></select>
+                    <label for="original_language_id" class="mt-3">Original language</label>
+                    <select id="original_language_id"></select>
+                    <input type="text" id="rental_duration" placeholder="rental_duration" />
+                    <input type="text" id="rental_rate" placeholder="rental_rate" />
+                </section>
+            </section>
+
+
+            <section class="col-6">
+                <section action="">
+                    <input type="text" id="length" placeholder="length" />
+                    <input type="text" id="replacement_cost" placeholder="replacement_cost" />
+                    <label for="rating" class="mt-3">Rating</label>
+                    <select name="rating" id="rating">
+                        <option value=""></option>
+                        <option value="G">G</option>
+                        <option value="PG">PG</option>
+                        <option value="PG-13">PG-13</option>
+                        <option value="R">R</option>
+                        <option value="NC-17">NC-17</option>
+                    </select>
+                    <input type="text" id="special_features" placeholder="special_features" />
+                    <label for="rating" class="mt-3">Category</label>
+                    <select name="category_id" id="category_id"></select>
+                    <input type="text" id="actors" placeholder="actors e.g., Peter Tan, Nick Wahlberg, Ed Chase " />
+                </section>
+            </section>
+        </form>
+
+        <section class="d-flex justify-content-center align-items-center mt-1">
+            <button type="submit" class="button" id="addDVDButton">Add DVD!</button>
+        </section>
+
+        
+        <section class="d-flex justify-content-center align-items-center mt-5">
+            <button type="submit" class="button signOutButton" id="signOut">Sign Out</button>
+        </section>
+
+
+        <section id="addDVDFeedback" class="mb-5">
+
+        </section>
+
+
+    </main>
+
+
+</body>
+
+</html>

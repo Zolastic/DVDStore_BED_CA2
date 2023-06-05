@@ -1,0 +1,105 @@
+<!-- Name: Ho Nhat Tien
+Class: DIT/FT/1B/1B04
+Admission Number: P2205894 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD: Admin Access</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="scripts/config.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            const tmpToken = localStorage.getItem("token");
+
+            $.ajax({
+                    headers: { "authorization": "Bearer " + tmpToken },
+                    url:  `${backend_url}/verify`,
+                    type: "GET",
+                    success: function(data, textStatus, xhr) {
+                        return
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        window.location.assign("loginPage.html");
+                    }
+                })
+
+            $("#addAdmin").click(function() {
+                window.location.assign("addActor.html");
+            })
+
+            $("#addCustomer").click(function() {
+                window.location.assign("addCustomer.html");
+            })
+
+            $("#addDVD").click(function() {
+                window.location.assign("addDVD.html");
+            })
+
+            $("#signOut").click(function() {
+                localStorage.removeItem('token');
+                window.location.assign("homepage.html");
+            })
+        })
+    </script>
+
+</head>
+<body class="body">
+    
+    <header>
+        <div class="navigation">
+            <a href="homepage.html">Homepage</a>
+            <a class="active" href="adminAccess.html">Admin Access</a>
+            <a href="addActor.html">Add Actor</a>
+            <a href="addCustomer.html">Add Customer</a>
+            <a href="addDVD.html">Add DVD</a>
+        </div>
+    </header>
+
+    <main class="d-flex flex-column justify-content-center align-items-center">
+
+        <section class="heading">
+            <h1>Admin Access</h1>
+        </section>
+
+        <section class="d-flex flex-row mt-5">
+
+            <section class="col-4">
+                <section>
+                    <button type="submit" class="button" id="addAdmin">Add Actor</button>
+                </section>
+            </section>
+
+            <section class="col-4">
+                <section>
+                    <button type="submit" class="button" id="addCustomer">Add Customer</button>
+                </section>
+            </section>
+
+            <section class="col-4">
+                <section>
+                    <button type="submit" class="button" id="addDVD">Add DVD</button>
+                </section>
+            </section>
+
+        </section>
+
+    
+        <section class="d-flex justify-content-center align-items-center mt-5">
+            <button type="submit" class="button signOutButton" id="signOut">Sign Out</button>
+        </section>
+
+    </main>
+</body>
+</html>

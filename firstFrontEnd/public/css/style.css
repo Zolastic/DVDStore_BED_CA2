@@ -1,0 +1,430 @@
+/* Name: Ho Nhat Tien
+Class: DIT/FT/1B/1B04
+Admission Number: P2205894 */
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 150%;
+    background-color: #DAE8E9;
+    line-height: 150%;
+    
+}
+
+.body {
+    background-color: #DAE8E9;
+}
+
+::selection {
+    color: #DAE8E9;
+    background-color: #5D5C61;
+}
+
+a {
+    text-decoration: none;
+    color: #32858A;
+}
+
+.navigation {
+    overflow: hidden;
+    background-color: #5D5C61;
+    display: flex;
+    justify-content: center;
+    
+  }
+  
+  .navigation a {
+    color: #fff;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .navigation a.active {
+    background-color: #A9A7B0;
+    color: white;
+  }
+
+  .navigation a:hover {
+    background-color: #c4cece;
+    color: #5D5C61;
+    cursor: pointer;
+  }
+
+.bodyLoginPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #DAE8E9;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -2px 4px 2px rgba(0, 0, 0, 0.3);
+    background: #5D5C61;
+}
+
+.formContainer h1 {
+    color: #DAE8E9;
+}
+
+.formContainer form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.formContainer p {
+    color: #b6c1c1;
+}
+
+.logInButton {
+    background-color: #DAE8E9 !important;
+    color: #32858A !important;
+}
+
+.logInButton:hover {
+    background-color: #32858A !important;
+    color: #DAE8E9 !important;
+}
+
+.submitButton:hover {
+    cursor: pointer;
+}
+
+.homepageHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    border-radius: 3;
+    border-width: 1;
+    background-color: #FAF9F7;
+    height: 111px;
+    box-shadow: -2px 4px 2px rgba(0, 0, 0, 0.3);
+}
+
+.homepageHeader a {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+
+.homepageHeader h1 {
+    font-size: 2rem;
+    padding-left: 20px;
+    color: #ADA089;
+}
+
+.homepageHeader img {
+    width: 100px;
+    height: 100px;
+    padding-left: 3px;
+}
+
+.searchArea {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.searchAreaCol1 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.searchAreaCol2 {
+    flex: 1;
+    padding: 30px;
+}
+
+.searchArea label {
+    color: #5D5C61;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #32858A;
+    background-color: #DAE8E9;
+    color: #5D5C61;
+  }
+
+.searchButtonArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchResultHeader {
+    color: #899BAD;
+    margin-left: 5px;
+    margin-top: 30px;
+}
+
+.searchResultsArea {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.searchReasultCard {
+    background-color: #5D5C61 !important;
+    color: #DAE8E9 !important;
+    max-width: 500px;
+}
+
+.searchReasultCard div {
+    color: #DAE8E9 !important;
+}
+
+.searchReasultCard a {
+    background-color: #32858A !important;
+    color: #DAE8E9 !important;
+    border-width: 0px;
+}
+
+
+.dvdDetailsEachDetail {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.dvdDetailsEachDetail h3 {
+    color: #5D5C61;
+    font-weight: bolder;
+}
+
+.dvdDetailsEachDetail img {
+    width: 200px;
+    height: 200px;
+    border-color: #5D5C61;
+    border-radius: 1000px;
+    border-width: 2px;
+    background-color: #777389;
+}
+
+.viewFilmTitle {
+    color: #32858A !important;
+}
+
+/* Add Actor Page */
+
+#addActorBody main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.heading h1 {
+    font-weight: bold;
+    font-size: 20;
+    color: #5D5C61;
+}
+
+.addActorTextInputsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addActorTextInputsContainer form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addActorTextInputsContainer input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #32858A;
+    background-color: #DAE8E9;
+    color: #5D5C61;
+}
+
+.button {
+  background-color: #5D5C61;
+  border: 0px;
+  border-radius: .75rem;
+  box-sizing: border-box;
+  color: #DAE8E9;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  padding: .75rem 1.2rem;
+  text-align: center;
+  text-decoration: none #32858A solid;
+  text-decoration-thickness: auto;
+  transition-duration: .2s;
+  transition-property: background-color,border-color,color,fill,stroke;
+  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+  user-select: none;
+  touch-action: manipulation;
+  width: 333px;
+}
+
+.button:hover {
+  background-color: #32858A;
+  color: #DAE8E9;
+}
+
+.button:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.addActorMessages {
+    margin-top: 50px;
+}
+
+.addFeedback {
+
+    margin-top: 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-radius: 9px;
+    background-color: #5D5C61;
+
+    width: 333px;
+    height: 100px;
+}
+
+.successColour {
+    background-color: #00C29D;
+    width: 20.85px;
+    border-radius: 9px;
+    height: 100px;
+}
+
+.errorColour {
+    background-color: #F79B87;
+    width: 20.85px;
+    border-radius: 9px;
+    height: 100px;
+
+}
+
+.addFeedback p {
+    margin: 3px;
+    padding-left: 18px;
+    color: #DAE8E9;
+}
+
+.backgroundMessage, .actorID {
+    font-size: 13px;
+    color: #b6c1c1;
+}
+
+.addFeedback i {
+    color: #b6c1c1;
+    padding-left: 3px;
+}
+
+
+/* addCustomer */
+
+.addCustomerFromContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addCustomerFromContainer form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.addCustomerFromContainer form label {
+    color: #5D5C61;
+}
+
+.addCustomerFromContainer form input, select {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.addCustomerFirstColumn {
+    margin: 100px;
+    flex: 1;
+}
+
+.addCustomerSecondColumn {
+    margin: 100px;
+    flex: 1;
+}
+
+#addCustomerFeedback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signOutButton {
+    color: #F79B87;
+}
+
+.signOutButton:hover {
+    background-color: #F79B87;
+    color: #DAE8E9;
+}
+
+/* addDVD */
+
+.selectImage {
+    text-align:center;
+    padding:3%;
+    border:thin solid #5D5C61;
+    background-color: #5D5C61;
+    color: #DAE8E9;
+}
+
+.selectImage:hover {
+    color: #32858A;
+}
+
+.selectImage input {
+    display: none;
+}
+
+.selectImage label {
+    cursor: pointer;
+}

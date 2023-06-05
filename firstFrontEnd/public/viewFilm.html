@@ -1,0 +1,136 @@
+<!-- Name: Ho Nhat Tien
+Class: DIT/FT/1B/1B04
+Admission Number: P2205894 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD: DVD Details Page</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="scripts/config.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const url =  `${backend_url}/film` + window.location.search;
+            console.log("window.location.search: ", window.location.search);
+            console.log("url: ", url);
+
+            $("#adminAccess").click(function() {
+                console.log("clicked");
+                const tmpToken = localStorage.getItem("token");
+
+                $.ajax({
+                    headers: { "authorization": "Bearer " + tmpToken },
+                    url:  `${backend_url}/verify`,
+                    type: "GET",
+                    success: function(data, textStatus, xhr) {
+                        window.location.assign("adminAccess.html");
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        if (xhr.status === 401) {
+                            window.location.assign("loginPage.html");
+                        } else if (xhr.status === 403) {
+                            $("#adminAccessError").html(`<section class="addFeedback">
+                <section class="errorColour"></section>
+                <section>
+                    <p class="backgroundMessage">Uh-oh! <i class="bi bi-emoji-frown-fill"></i></p>
+                    <p>You are not an admin</p>
+                </section>
+            </section>`);
+                        }
+                    }
+                })
+            });
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data, textStatus, xhr) {
+                    let title = "", category = "", release_year = "", description = "", rating = "", actors = "", sectionOutput = "", image="";
+                    if (data != null) {
+                        title = data.title;
+                        category = data.category;
+                        release_year = data.release_year || "NIL";
+                        description = data.description || "NIL";
+                        rating = data.rating;
+                        actors = data.actors;
+                        image = data.image;
+                        console.log("title: ", title);
+                        console.log("category: ", category);
+                        console.log("release_year: ", release_year);
+                        console.log("description: ", description);
+                        console.log("rating: ", rating);
+                        console.log("actors: ", actors);
+                        console.log("image: ", image);
+
+                        sectionOutput = `<section class="dvdDetailsEachDetail">
+                <img src="data:image/png;base64, ${image}" alt="">
+
+                <h3 class="mt-5">Title: </h3>
+                <h3 class="viewFilmTitle">${title}</h4>
+            </section>
+            <section class="dvdDetailsEachDetail">
+                <h3>Category: </h3>
+                <p>${category}</p>
+            </section>
+            <section class="dvdDetailsEachDetail">
+                <h3>Release year: </h3>
+                <p>${release_year}</p>
+            </section>
+            <section class="dvdDetailsEachDetail">
+                <h3>Dsescription: </h3>
+                <p>${description}</p>
+            </section>
+            <section class="dvdDetailsEachDetail">
+                <h3>Rating: </h3>
+                <p>${rating}</p>
+            </section>
+            <section class="dvdDetailsEachDetail">
+                <h3>Actors: </h3>
+                <p>${actors}</p>
+            </section>`;
+
+                        $("#dvdDetails").html(sectionOutput);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Error in Operatoin")
+                    alert("Error")
+                    alert(JSON.stringify(xhr));
+                    alert(textStatus);
+                    alert(JSON.stringify(xhr));
+                }
+            })
+        })
+    </script>
+
+</head>
+
+<body class="body">
+
+    <header>
+        <div class="navigation">
+            <a class="active" href="homepage.html">Homepage</a>
+            <a id="adminAccess">Admin Access</a>
+        </div>
+    </header>
+    <main>
+        <section class="dvdDetails" id="dvdDetails">
+
+        </section>
+    </main>
+
+</body>
+
+</html>
